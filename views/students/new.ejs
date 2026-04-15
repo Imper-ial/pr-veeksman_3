@@ -2,22 +2,19 @@
 
 <h2>Registrer ny elev</h2>
 
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
 <form action="/elever" method="POST">
   <label for="navn">Navn</label>
-  <input id="navn" name="navn" type="text" required />
+  <input id="navn" name="navn" type="text" value="<%= formData.navn || '' %>" required />
 
-  <label for="bedriftType">Type bedrift</label>
-  <select id="bedriftType" name="bedriftType" required>
-    <option value="">Velg type</option>
-    <option value="Praksisbedrift">Praksisbedrift</option>
-    <option value="Lærebedrift">Lærebedrift</option>
-  </select>
+  <label for="epost">E-post</label>
+  <input id="epost" name="epost" type="email" value="<%= formData.epost || '' %>" required />
 
-  <label for="bedriftNavn">Navn på bedrift</label>
-  <input id="bedriftNavn" name="bedriftNavn" type="text" required />
-
-  <label for="startDato">Startdato</label>
-  <input id="startDato" name="startDato" type="date" required />
+  <label for="telefon">Telefon (valgfritt)</label>
+  <input id="telefon" name="telefon" type="text" value="<%= formData.telefon || '' %>" />
 
   <button type="submit">Lagre elev</button>
 </form>

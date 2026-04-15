@@ -1,0 +1,31 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Plasseringer</h2>
+<p><a href="/plasseringer/ny">Lag ny plassering</a></p>
+
+<% if (placements.length === 0) { %>
+  <p>Ingen plasseringer registrert ennå.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Elev</th>
+        <th>Praksisbedrift</th>
+        <th>Lærebedrift</th>
+        <th>Startdato</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% placements.forEach((placement) => { %>
+        <tr>
+          <td><%= placement.student ? placement.student.navn : "-" %></td>
+          <td><%= placement.praksisbedrift ? placement.praksisbedrift.navn : "-" %></td>
+          <td><%= placement.laerebedrift ? placement.laerebedrift.navn : "-" %></td>
+          <td><%= placement.startDato.toLocaleDateString("no-NO") %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include("../partials/footer") %>

@@ -6,19 +6,16 @@ const studentSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  bedriftType: {
-    type: String,
-    enum: ["Praksisbedrift", "Lærebedrift"],
-    required: true
-  },
-  bedriftNavn: {
+  epost: {
     type: String,
     required: true,
-    trim: true
+    unique: true,
+    trim: true,
+    lowercase: true
   },
-  startDato: {
-    type: Date,
-    required: true
+  telefon: {
+    type: String,
+    trim: true
   }
 });
 

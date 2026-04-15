@@ -1,0 +1,35 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Ny bedrift</h2>
+
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form action="/bedrifter" method="POST">
+  <label for="navn">Navn</label>
+  <input id="navn" name="navn" type="text" value="<%= formData.navn || '' %>" required />
+
+  <label for="type">Type</label>
+  <select id="type" name="type" required>
+    <option value="">Velg type</option>
+    <option value="praksisbedrift" <%= formData.type === 'praksisbedrift' ? 'selected' : '' %>>
+      praksisbedrift
+    </option>
+    <option value="laerebedrift" <%= formData.type === 'laerebedrift' ? 'selected' : '' %>>
+      laerebedrift
+    </option>
+  </select>
+
+  <label for="kontaktperson">Kontaktperson (valgfritt)</label>
+  <input
+    id="kontaktperson"
+    name="kontaktperson"
+    type="text"
+    value="<%= formData.kontaktperson || '' %>"
+  />
+
+  <button type="submit">Lagre bedrift</button>
+</form>
+
+<%- include("../partials/footer") %>

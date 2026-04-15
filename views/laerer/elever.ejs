@@ -9,18 +9,16 @@
     <thead>
       <tr>
         <th>Navn</th>
-        <th>Type bedrift</th>
-        <th>Bedrift</th>
-        <th>Startdato</th>
+        <th>E-post</th>
+        <th>Telefon</th>
       </tr>
     </thead>
     <tbody>
       <% students.forEach((student) => { %>
         <tr>
           <td><%= student.navn %></td>
-          <td><%= student.bedriftType %></td>
-          <td><%= student.bedriftNavn %></td>
-          <td><%= student.startDato.toLocaleDateString("no-NO") %></td>
+          <td><%= student.epost %></td>
+          <td><%= student.telefon || "-" %></td>
         </tr>
       <% }) %>
     </tbody>

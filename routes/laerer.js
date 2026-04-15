@@ -6,7 +6,7 @@ const authorizeRole = require("../middleware/authorizeRole");
 const router = express.Router();
 
 router.get("/elever", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
-  const students = await Student.find().sort({ startDato: -1 });
+  const students = await Student.find().sort({ navn: 1 });
   res.render("laerer/elever", {
     title: "Lærer - elevoversikt",
     students

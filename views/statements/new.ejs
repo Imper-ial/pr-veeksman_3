@@ -1,0 +1,26 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Ny tjenesteuttalelse</h2>
+
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form action="/uttalelser" method="POST">
+  <label for="student">Elev</label>
+  <select id="student" name="student" required>
+    <option value="">Velg elev</option>
+    <% students.forEach((student) => { %>
+      <option value="<%= student._id %>" <%= formData.student == student._id ? 'selected' : '' %>>
+        <%= student.navn %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="tekst">Uttalelse</label>
+  <textarea id="tekst" name="tekst" rows="5" required><%= formData.tekst || '' %></textarea>
+
+  <button type="submit">Lagre uttalelse</button>
+</form>
+
+<%- include("../partials/footer") %>

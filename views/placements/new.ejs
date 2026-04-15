@@ -1,0 +1,49 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Ny plassering</h2>
+
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form action="/plasseringer" method="POST">
+  <label for="student">Elev</label>
+  <select id="student" name="student" required>
+    <option value="">Velg elev</option>
+    <% students.forEach((student) => { %>
+      <option value="<%= student._id %>" <%= formData.student == student._id ? 'selected' : '' %>>
+        <%= student.navn %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="praksisbedrift">Praksisbedrift</label>
+  <select id="praksisbedrift" name="praksisbedrift" required>
+    <option value="">Velg praksisbedrift</option>
+    <% praksisbedrifter.forEach((company) => { %>
+      <option
+        value="<%= company._id %>"
+        <%= formData.praksisbedrift == company._id ? 'selected' : '' %>
+      >
+        <%= company.navn %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="laerebedrift">Lærebedrift</label>
+  <select id="laerebedrift" name="laerebedrift" required>
+    <option value="">Velg lærebedrift</option>
+    <% laerebedrifter.forEach((company) => { %>
+      <option value="<%= company._id %>" <%= formData.laerebedrift == company._id ? 'selected' : '' %>>
+        <%= company.navn %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="startDato">Startdato</label>
+  <input id="startDato" name="startDato" type="date" value="<%= formData.startDato || '' %>" required />
+
+  <button type="submit">Lagre plassering</button>
+</form>
+
+<%- include("../partials/footer") %>

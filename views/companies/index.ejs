@@ -1,0 +1,29 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Bedrifter</h2>
+<p><a href="/bedrifter/ny">Registrer ny bedrift</a></p>
+
+<% if (companies.length === 0) { %>
+  <p>Ingen bedrifter registrert ennå.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Navn</th>
+        <th>Type</th>
+        <th>Kontaktperson</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% companies.forEach((company) => { %>
+        <tr>
+          <td><%= company.navn %></td>
+          <td><%= company.type %></td>
+          <td><%= company.kontaktperson || "-" %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include("../partials/footer") %>

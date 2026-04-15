@@ -13,13 +13,16 @@ const adminRoutes = require("./routes/admin");
 const teacherRoutes = require("./routes/laerer");
 const companyRoutes = require("./routes/bedrift");
 const studentRoleRoutes = require("./routes/elev");
+const companiesRoutes = require("./routes/companies");
+const placementsRoutes = require("./routes/placements");
+const statementsRoutes = require("./routes/statements");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/opplaeringskontor";
 
-// Koble til lokal MongoDB (eller URI fra .env)
+// koble til lokal MongoDB fra .env
 mongoose
   .connect(MONGO_URI)
   .then(() => {
@@ -37,13 +40,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "session-secret-lokal",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   })
 );
 
-// Gjør brukerinfo tilgjengelig i alle EJS-visninger.
+// gjør brukerinfo tilgjengelig i alle EJS-sider.
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.user || null;
   next();
@@ -57,6 +60,9 @@ app.use("/admin", adminRoutes);
 app.use("/laerer", teacherRoutes);
 app.use("/bedrift", companyRoutes);
 app.use("/elev", studentRoleRoutes);
+app.use("/bedrifter", companiesRoutes);
+app.use("/plasseringer", placementsRoutes);
+app.use("/uttalelser", statementsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server kjører på http://localhost:${PORT}`);
