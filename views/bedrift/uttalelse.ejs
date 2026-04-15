@@ -1,0 +1,21 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Tjenesteuttalelse (bedrift)</h2>
+
+<% if (saved) { %>
+  <p><strong>Uttalelsen er registrert.</strong></p>
+  <p><strong>Elev:</strong> <%= elevNavn %></p>
+  <p><strong>Tekst:</strong> <%= tekst %></p>
+<% } %>
+
+<form action="/bedrift/uttalelse" method="POST">
+  <label for="elevNavn">Elevens navn</label>
+  <input id="elevNavn" name="elevNavn" type="text" required />
+
+  <label for="tekst">Uttalelse</label>
+  <textarea id="tekst" name="tekst" rows="5" required></textarea>
+
+  <button type="submit">Lagre uttalelse</button>
+</form>
+
+<%- include("../partials/footer") %>

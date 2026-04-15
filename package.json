@@ -1,5 +1,5 @@
 {
-  "name": "opplaeringskontor-elever",
+  "name": "opplaeringskontor-nettside",
   "version": "1.0.0",
   "description": "Enkel VG2-app med Express, EJS og MongoDB for elevoversikt.",
   "main": "app.js",
@@ -8,9 +8,11 @@
     "dev": "node app.js"
   },
   "dependencies": {
+    "argon2": "^0.41.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "mongoose": "^8.9.5"
   }
 }

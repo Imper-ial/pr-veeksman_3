@@ -11,8 +11,17 @@
       <h1>Opplæringskontor</h1>
       <nav>
         <a href="/">Forside</a>
-        <a href="/elever">Elever</a>
-        <a href="/elever/ny">Registrer elev</a>
+        <% if (currentUser) { %>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/admin">Admin</a>
+          <a href="/laerer/elever">Lærer</a>
+          <a href="/bedrift/uttalelse">Bedrift</a>
+          <a href="/elev/min-side">Elev</a>
+          <a href="/auth/logout">Logg ut</a>
+        <% } else { %>
+          <a href="/auth/login">Logg inn</a>
+          <a href="/auth/register">Registrer bruker</a>
+        <% } %>
       </nav>
     </header>
     <main>

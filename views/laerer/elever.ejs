@@ -1,0 +1,30 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Elevoversikt (lærer)</h2>
+
+<% if (students.length === 0) { %>
+  <p>Ingen elever registrert ennå.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Navn</th>
+        <th>Type bedrift</th>
+        <th>Bedrift</th>
+        <th>Startdato</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students.forEach((student) => { %>
+        <tr>
+          <td><%= student.navn %></td>
+          <td><%= student.bedriftType %></td>
+          <td><%= student.bedriftNavn %></td>
+          <td><%= student.startDato.toLocaleDateString("no-NO") %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include("../partials/footer") %>

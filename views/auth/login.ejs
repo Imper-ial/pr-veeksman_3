@@ -1,0 +1,19 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Logg inn</h2>
+
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form action="/auth/login" method="POST">
+  <label for="epost">E-post</label>
+  <input id="epost" name="epost" type="email" required />
+
+  <label for="passord">Passord</label>
+  <input id="passord" name="passord" type="password" required />
+
+  <button type="submit">Logg inn</button>
+</form>
+
+<%- include("../partials/footer") %>

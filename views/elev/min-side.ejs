@@ -1,0 +1,12 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Min side (elev)</h2>
+<p>Her ser du kun din egen informasjon.</p>
+
+<ul>
+  <li><strong>Navn:</strong> <%= user.navn %></li>
+  <li><strong>E-post:</strong> <%= user.epost %></li>
+  <li><strong>Rolle:</strong> <%= user.rolle %></li>
+</ul>
+
+<%- include("../partials/footer") %>

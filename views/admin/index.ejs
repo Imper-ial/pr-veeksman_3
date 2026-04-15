@@ -1,0 +1,12 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Admin-side</h2>
+<p>Hei <%= user.navn %>. Som admin har du tilgang til alle sider.</p>
+
+<ul>
+  <li><a href="/laerer/elever">Se elevoversikt</a></li>
+  <li><a href="/bedrift/uttalelse">Skriv tjenesteuttalelse</a></li>
+  <li><a href="/elev/min-side">Se elev-side</a></li>
+</ul>
+
+<%- include("../partials/footer") %>

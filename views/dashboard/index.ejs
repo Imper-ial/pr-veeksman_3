@@ -1,0 +1,14 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Dashboard</h2>
+<p>Du er logget inn.</p>
+
+<ul>
+  <li><strong>Navn:</strong> <%= user.navn %></li>
+  <li><strong>E-post:</strong> <%= user.epost %></li>
+  <li><strong>Rolle:</strong> <%= user.rolle %></li>
+</ul>
+
+<p>Her kan opplæringskontoret senere vise mer informasjon.</p>
+
+<%- include("../partials/footer") %>
