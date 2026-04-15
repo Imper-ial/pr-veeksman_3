@@ -13,14 +13,25 @@
         <a href="/">Forside</a>
         <% if (currentUser) { %>
           <a href="/dashboard">Dashboard</a>
-          <a href="/elever">Elever</a>
-          <a href="/bedrifter">Bedrifter</a>
-          <a href="/plasseringer">Plasseringer</a>
-          <a href="/uttalelser">Uttalelser</a>
-          <a href="/admin">Admin</a>
-          <a href="/laerer/elever">Lærer</a>
-          <a href="/bedrift/uttalelse">Bedrift</a>
-          <a href="/elev/min-side">Elev</a>
+          <% if (currentUser.rolle === "admin") { %>
+            <a href="/admin">Admin</a>
+            <a href="/elever">Elever</a>
+            <a href="/bedrifter">Bedrifter</a>
+            <a href="/plasseringer">Plasseringer</a>
+            <a href="/uttalelser">Uttalelser</a>
+          <% } %>
+          <% if (currentUser.rolle === "lærer") { %>
+            <a href="/laerer/elever">Elevoversikt</a>
+            <a href="/elever">Elever</a>
+            <a href="/plasseringer">Plasseringer</a>
+          <% } %>
+          <% if (currentUser.rolle === "bedrift") { %>
+            <a href="/bedrift">Bedrift-dashboard</a>
+            <a href="/uttalelser/ny">Ny uttalelse</a>
+          <% } %>
+          <% if (currentUser.rolle === "elev") { %>
+            <a href="/elev/min-side">Min side</a>
+          <% } %>
           <a href="/auth/logout">Logg ut</a>
         <% } else { %>
           <a href="/auth/login">Logg inn</a>

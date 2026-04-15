@@ -70,3 +70,21 @@ td {
   color: #b91c1c;
   font-weight: bold;
 }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.card {
+  border: 1px solid #d7dbe7;
+  border-radius: 8px;
+  padding: 0.8rem;
+  background: #f8faff;
+}
+
+.card h3 {
+  margin-top: 0;
+}

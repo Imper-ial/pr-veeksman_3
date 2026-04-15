@@ -1,12 +1,24 @@
 <%- include("../partials/header", { title: title }) %>
 
-<h2>Admin-side</h2>
-<p>Hei <%= user.navn %>. Som admin har du tilgang til alle sider.</p>
+<h2>Admin-dashboard</h2>
+<p>Hei <%= user.navn %>. Her ser du en enkel oversikt.</p>
 
+<div class="cards">
+  <div class="card">
+    <h3>Antall elever</h3>
+    <p><strong><%= studentCount %></strong></p>
+  </div>
+  <div class="card">
+    <h3>Antall bedrifter</h3>
+    <p><strong><%= companyCount %></strong></p>
+  </div>
+</div>
+
+<p>Gå videre:</p>
 <ul>
-  <li><a href="/laerer/elever">Se elevoversikt</a></li>
-  <li><a href="/bedrift/uttalelse">Skriv tjenesteuttalelse</a></li>
-  <li><a href="/elev/min-side">Se elev-side</a></li>
+  <li><a href="/laerer/elever">Lærer: elevoversikt</a></li>
+  <li><a href="/bedrifter">Bedrifter</a></li>
+  <li><a href="/plasseringer">Plasseringer</a></li>
 </ul>
 
 <%- include("../partials/footer") %>

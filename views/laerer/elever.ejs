@@ -1,24 +1,27 @@
 <%- include("../partials/header", { title: title }) %>
 
-<h2>Elevoversikt (lærer)</h2>
+<h2>Lærer - elevoversikt</h2>
+<p>Her ser du elever og hvilken bedrift de er i.</p>
 
-<% if (students.length === 0) { %>
-  <p>Ingen elever registrert ennå.</p>
+<% if (placements.length === 0) { %>
+  <p>Ingen plasseringer registrert ennå.</p>
 <% } else { %>
   <table>
     <thead>
       <tr>
         <th>Navn</th>
-        <th>E-post</th>
-        <th>Telefon</th>
+        <th>Praksisbedrift</th>
+        <th>Lærebedrift</th>
+        <th>Startdato</th>
       </tr>
     </thead>
     <tbody>
-      <% students.forEach((student) => { %>
+      <% placements.forEach((placement) => { %>
         <tr>
-          <td><%= student.navn %></td>
-          <td><%= student.epost %></td>
-          <td><%= student.telefon || "-" %></td>
+          <td><%= placement.student ? placement.student.navn : "-" %></td>
+          <td><%= placement.praksisbedrift ? placement.praksisbedrift.navn : "-" %></td>
+          <td><%= placement.laerebedrift ? placement.laerebedrift.navn : "-" %></td>
+          <td><%= placement.startDato.toLocaleDateString("no-NO") %></td>
         </tr>
       <% }) %>
     </tbody>

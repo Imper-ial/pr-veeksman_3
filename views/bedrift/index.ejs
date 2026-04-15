@@ -1,0 +1,32 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Bedrift-dashboard</h2>
+<p>Her kan du skrive og se tjenesteuttalelser.</p>
+
+<p><a href="/uttalelser/ny">Skriv ny tjenesteuttalelse</a></p>
+
+<h3>Siste uttalelser skrevet av deg</h3>
+<% if (statements.length === 0) { %>
+  <p>Ingen uttalelser skrevet ennå.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Elev</th>
+        <th>Dato</th>
+        <th>Tekst</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% statements.forEach((statement) => { %>
+        <tr>
+          <td><%= statement.student ? statement.student.navn : "-" %></td>
+          <td><%= statement.dato.toLocaleDateString("no-NO") %></td>
+          <td><%= statement.tekst %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include("../partials/footer") %>

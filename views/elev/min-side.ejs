@@ -1,12 +1,70 @@
 <%- include("../partials/header", { title: title }) %>
 
 <h2>Min side (elev)</h2>
-<p>Her ser du kun din egen informasjon.</p>
+<p>Her ser du kun din egen informasjon og eventuelle uttalelser.</p>
 
-<ul>
-  <li><strong>Navn:</strong> <%= user.navn %></li>
-  <li><strong>E-post:</strong> <%= user.epost %></li>
-  <li><strong>Rolle:</strong> <%= user.rolle %></li>
-</ul>
+<h3>Min bruker</h3>
+<table>
+  <tbody>
+    <tr>
+      <th>Navn</th>
+      <td><%= user.navn %></td>
+    </tr>
+    <tr>
+      <th>E-post</th>
+      <td><%= user.epost %></td>
+    </tr>
+    <tr>
+      <th>Rolle</th>
+      <td><%= user.rolle %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Min plassering</h3>
+<% if (!student) { %>
+  <p>Fant ikke elevprofil med samme e-post.</p>
+<% } else if (!placement) { %>
+  <p>Ingen plassering registrert ennå.</p>
+<% } else { %>
+  <table>
+    <tbody>
+      <tr>
+        <th>Praksisbedrift</th>
+        <td><%= placement.praksisbedrift ? placement.praksisbedrift.navn : "-" %></td>
+      </tr>
+      <tr>
+        <th>Lærebedrift</th>
+        <td><%= placement.laerebedrift ? placement.laerebedrift.navn : "-" %></td>
+      </tr>
+      <tr>
+        <th>Startdato</th>
+        <td><%= placement.startDato.toLocaleDateString("no-NO") %></td>
+      </tr>
+    </tbody>
+  </table>
+<% } %>
+
+<h3>Mine tjenesteuttalelser</h3>
+<% if (statements.length === 0) { %>
+  <p>Ingen tjenesteuttalelser enda.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Dato</th>
+        <th>Tekst</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% statements.forEach((statement) => { %>
+        <tr>
+          <td><%= statement.dato.toLocaleDateString("no-NO") %></td>
+          <td><%= statement.tekst %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
 
 <%- include("../partials/footer") %>
