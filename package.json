@@ -1,0 +1,16 @@
+{
+  "name": "opplaeringskontor-elever",
+  "version": "1.0.0",
+  "description": "Enkel VG2-app med Express, EJS og MongoDB for elevoversikt.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}

@@ -1,0 +1,25 @@
+<%- include("../partials/header", { title: title }) %>
+
+<h2>Registrer ny elev</h2>
+
+<form action="/elever" method="POST">
+  <label for="navn">Navn</label>
+  <input id="navn" name="navn" type="text" required />
+
+  <label for="bedriftType">Type bedrift</label>
+  <select id="bedriftType" name="bedriftType" required>
+    <option value="">Velg type</option>
+    <option value="Praksisbedrift">Praksisbedrift</option>
+    <option value="Lærebedrift">Lærebedrift</option>
+  </select>
+
+  <label for="bedriftNavn">Navn på bedrift</label>
+  <input id="bedriftNavn" name="bedriftNavn" type="text" required />
+
+  <label for="startDato">Startdato</label>
+  <input id="startDato" name="startDato" type="date" required />
+
+  <button type="submit">Lagre elev</button>
+</form>
+
+<%- include("../partials/footer") %>
