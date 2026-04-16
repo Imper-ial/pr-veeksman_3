@@ -18,7 +18,7 @@
       <% companies.forEach((company) => { %>
         <tr>
           <td><%= company.navn %></td>
-          <td><%= company.type %></td>
+          <td><%= company.type === "praksisbedrift" ? "Praksisbedrift" : "Lærebedrift" %></td>
           <td><%= company.kontaktperson || "-" %></td>
         </tr>
       <% }) %>

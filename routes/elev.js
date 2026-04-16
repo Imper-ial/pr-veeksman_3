@@ -8,6 +8,7 @@ const Statement = require("../models/Statement");
 const router = express.Router();
 
 router.get("/min-side", isAuthenticated, authorizeRole(["elev"]), async (req, res) => {
+  // Elev-data hentes kun via e-posten til innlogget elev.
   const student = await Student.findOne({ epost: req.session.user.epost });
 
   let placement = null;

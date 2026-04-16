@@ -1,0 +1,36 @@
+<%- include("partials/header", { title: title }) %>
+
+<h2>GDPR og dataintegritet</h2>
+
+<h3>1) Dataintegritet</h3>
+<p>
+  Dataintegritet betyr at data er riktige og pålitelige. I dette systemet bruker vi
+  validering i skjema og ruter, for eksempel gyldig e-post, obligatoriske felt og riktig
+  type bedrift.
+</p>
+
+<h3>2) Tilgangskontroll</h3>
+<p>
+  Tilgangskontroll betyr at brukere bare får gjøre det rollen deres tillater. Eksempel:
+  lærer kan opprette elever, bedrift kan skrive uttalelser, og elev kan bare se sin egen side.
+</p>
+
+<h3>3) Personvern</h3>
+<p>
+  Personvern handler om å beskytte personopplysninger, som navn, e-post og uttalelser.
+  Vi viser ikke unødvendig data til feil rolle, og vi bruker innlogging med session.
+</p>
+
+<h3>4) Hvorfor dette er viktig</h3>
+<p>
+  Dette systemet brukes i opplæringskontor. Hvis feil person får tilgang eller data blir feil,
+  kan det skade eleven. Derfor må vi både beskytte data og sørge for at de er riktige.
+</p>
+
+<h3>Passord med argon2</h3>
+<p>
+  Passord lagres ikke i klartekst. Før lagring blir passord hashet med <strong>argon2</strong>.
+  Ved innlogging sammenlignes passordet med hash-verdi. Det gjør passord vanskeligere å misbruke.
+</p>
+
+<%- include("partials/footer") %>

@@ -3,6 +3,7 @@ const router = express.Router();
 const Student = require("../models/Student");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const authorizeRole = require("../middleware/authorizeRole");
+const { isValidEmail, isValidPhone, hasText } = require("../middleware/validation");
 
 // Vis alle elever
 router.get("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
@@ -18,17 +19,26 @@ router.get("/ny", isAuthenticated, authorizeRole(["lærer"]), (req, res) => {
 // Lagre ny elev
 router.post("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
   const { navn, epost, telefon } = req.body;
+  const cleanEmail = String(epost || "").trim().toLowerCase();
 
-  if (!navn || !epost) {
+  if (!hasText(navn, 2) || !isValidEmail(cleanEmail)) {
     return res.render("students/new", {
       title: "Ny elev",
-      error: "Navn og e-post må fylles ut.",
+      error: "Skriv gyldig navn og e-post.",
+      formData: req.body
+    });
+  }
+
+  if (!isValidPhone(telefon)) {
+    return res.render("students/new", {
+      title: "Ny elev",
+      error: "Telefon har ugyldig format.",
       formData: req.body
     });
   }
 
   try {
-    await Student.create({ navn, epost, telefon });
+    await Student.create({ navn: navn.trim(), epost: cleanEmail, telefon: String(telefon || "").trim() });
   } catch (error) {
     return res.render("students/new", {
       title: "Ny elev",

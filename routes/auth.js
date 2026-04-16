@@ -1,6 +1,7 @@
 const express = require("express");
 const argon2 = require("argon2");
 const User = require("../models/User");
+const { isValidEmail, isStrongEnoughPassword, hasText } = require("../middleware/validation");
 
 const router = express.Router();
 
@@ -11,8 +12,28 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { navn, epost, passord, rolle } = req.body;
+    const cleanEmail = String(epost || "").trim().toLowerCase();
 
-    const finnesFraFor = await User.findOne({ epost: epost.toLowerCase() });
+    if (!hasText(navn, 2)) {
+      return res.render("auth/register", {
+        title: "Registrering",
+        error: "Navn må ha minst 2 tegn."
+      });
+    }
+    if (!isValidEmail(cleanEmail)) {
+      return res.render("auth/register", {
+        title: "Registrering",
+        error: "Skriv en gyldig e-post."
+      });
+    }
+    if (!isStrongEnoughPassword(passord)) {
+      return res.render("auth/register", {
+        title: "Registrering",
+        error: "Passord må ha minst 8 tegn."
+      });
+    }
+
+    const finnesFraFor = await User.findOne({ epost: cleanEmail });
     if (finnesFraFor) {
       return res.render("auth/register", {
         title: "Registrering",
@@ -25,7 +46,7 @@ router.post("/register", async (req, res) => {
 
     await User.create({
       navn,
-      epost,
+      epost: cleanEmail,
       passord: hashedPassword,
       rolle
     });
@@ -46,7 +67,16 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { epost, passord } = req.body;
-    const user = await User.findOne({ epost: epost.toLowerCase() });
+    const cleanEmail = String(epost || "").trim().toLowerCase();
+
+    if (!isValidEmail(cleanEmail) || !hasText(passord, 1)) {
+      return res.render("auth/login", {
+        title: "Logg inn",
+        error: "Feil e-post eller passord."
+      });
+    }
+
+    const user = await User.findOne({ epost: cleanEmail });
 
     if (!user) {
       return res.render("auth/login", {

@@ -2,6 +2,7 @@ const express = require("express");
 const Company = require("../models/Company");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const authorizeRole = require("../middleware/authorizeRole");
+const { hasText } = require("../middleware/validation");
 
 const router = express.Router();
 
@@ -16,16 +17,21 @@ router.get("/ny", isAuthenticated, authorizeRole(["lærer"]), (req, res) => {
 
 router.post("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
   const { navn, type, kontaktperson } = req.body;
+  const allowedTypes = ["praksisbedrift", "laerebedrift"];
 
-  if (!navn || !type) {
+  if (!hasText(navn, 2) || !allowedTypes.includes(type)) {
     return res.render("companies/new", {
       title: "Ny bedrift",
-      error: "Navn og type må fylles ut.",
+      error: "Skriv gyldig navn og velg en gyldig type.",
       formData: req.body
     });
   }
 
-  await Company.create({ navn, type, kontaktperson });
+  await Company.create({
+    navn: navn.trim(),
+    type,
+    kontaktperson: String(kontaktperson || "").trim()
+  });
   res.redirect("/bedrifter");
 });
 

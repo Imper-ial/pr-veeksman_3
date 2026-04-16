@@ -11,10 +11,11 @@
       <h1>Opplæringskontor</h1>
       <nav>
         <a href="/">Forside</a>
+        <a href="/gdpr">GDPR</a>
         <% if (currentUser) { %>
           <a href="/dashboard">Dashboard</a>
           <% if (currentUser.rolle === "admin") { %>
-            <a href="/admin">Admin</a>
+            <a href="/admin">Admin-dashboard</a>
             <a href="/elever">Elever</a>
             <a href="/bedrifter">Bedrifter</a>
             <a href="/plasseringer">Plasseringer</a>
@@ -27,7 +28,7 @@
           <% } %>
           <% if (currentUser.rolle === "bedrift") { %>
             <a href="/bedrift">Bedrift-dashboard</a>
-            <a href="/uttalelser/ny">Ny uttalelse</a>
+            <a href="/uttalelser/ny">Skriv uttalelse</a>
           <% } %>
           <% if (currentUser.rolle === "elev") { %>
             <a href="/elev/min-side">Min side</a>
