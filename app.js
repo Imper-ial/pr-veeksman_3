@@ -19,10 +19,16 @@ const statementsRoutes = require("./routes/statements");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || "0.0.0.0";
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/opplaeringskontor";
+  process.env.MONGO_URI || "mongodb://10.12.3.141:27017/opplaeringskontor";
+const sessionSecret = process.env.SESSION_SECRET;
 
-// koble til lokal MongoDB fra .env
+if (!sessionSecret) {
+  throw new Error("SESSION_SECRET mangler i miljøvariabler.");
+}
+
+// koble til MongoDB fra .env
 mongoose
   .connect(MONGO_URI)
   .then(() => {
@@ -40,9 +46,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: sessionSecret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false
+    }
   })
 );
 
@@ -64,6 +75,6 @@ app.use("/bedrifter", companiesRoutes);
 app.use("/plasseringer", placementsRoutes);
 app.use("/uttalelser", statementsRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server kjører på http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server kjører på http://${HOST}:${PORT}`);
 });
