@@ -101,13 +101,9 @@ async function connectDB() {
 async function clearData() {
   if (!CONFIG.clearOldData) return;
 
-  console.log("Sletter gammel testdata...");
-  await Statement.deleteMany({});
-  await Placement.deleteMany({});
-  await Student.deleteMany({});
-  await Company.deleteMany({});
-  await User.deleteMany({});
-  console.log("Gammel data slettet");
+  console.log("Tømmer hele databasen...");
+  await mongoose.connection.db.dropDatabase();
+  console.log("Databasen er tømt");
 }
 
 async function createUsers(passwordHash) {
@@ -213,17 +209,18 @@ async function createPlacements(students, companies) {
         ? randomItem(laerebedrifter)
         : randomItem(companies);
 
-    const startDato = new Date(
-      2026,
-      randomInt(0, 10),
-      randomInt(1, 28)
-    );
+    const sluttDato = new Date();
+    sluttDato.setDate(sluttDato.getDate() + randomInt(-90, 30));
+
+    const startDato = new Date(sluttDato);
+    startDato.setDate(startDato.getDate() - randomInt(20, 90));
 
     return {
       student: student._id,
       praksisbedrift: praksisbedrift._id,
       laerebedrift: laerebedrift._id,
       startDato,
+      sluttDato,
     };
   });
 
