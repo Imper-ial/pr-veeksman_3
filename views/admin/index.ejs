@@ -14,6 +14,17 @@
   </div>
 </div>
 
+<h3>Varsler</h3>
+<% if (finishedPlacements.length === 0) { %>
+  <p>Ingen elever er ferdige i praksis enda.</p>
+<% } else { %>
+  <ul>
+    <% finishedPlacements.forEach((placement) => { %>
+      <li><%= placement.student?.navn || "Ukjent elev" %> er ferdig i praksis (sluttdato: <%= placement.sluttDato.toLocaleDateString("no-NO") %>).</li>
+    <% }) %>
+  </ul>
+<% } %>
+
 <p>Gå videre:</p>
 <ul>
   <li><a href="/laerer/elever">Elevoversikt</a></li>

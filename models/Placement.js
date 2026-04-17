@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+function defaultSluttDato() {
+  const currentYear = new Date().getFullYear();
+  return new Date(currentYear, 5, 19);
+}
+
 const placementSchema = new mongoose.Schema({
   student: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,6 +24,11 @@ const placementSchema = new mongoose.Schema({
   startDato: {
     type: Date,
     required: true
+  },
+  sluttDato: {
+    type: Date,
+    required: true,
+    default: defaultSluttDato
   }
 });
 

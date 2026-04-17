@@ -7,6 +7,13 @@ const authorizeRole = require("../middleware/authorizeRole");
 
 const router = express.Router();
 
+function getDefaultSluttDatoInput() {
+  const currentYear = new Date().getFullYear();
+  const month = String(6).padStart(2, "0");
+  const day = String(19).padStart(2, "0");
+  return `${currentYear}-${month}-${day}`;
+}
+
 router.get("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
   const placements = await Placement.find()
     .populate("student")
@@ -28,14 +35,14 @@ router.get("/ny", isAuthenticated, authorizeRole(["lærer"]), async (req, res) =
     students,
     praksisbedrifter,
     laerebedrifter,
-    formData: {}
+    formData: { sluttDato: getDefaultSluttDatoInput() }
   });
 });
 
 router.post("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) => {
-  const { student, praksisbedrift, laerebedrift, startDato } = req.body;
+  const { student, praksisbedrift, laerebedrift, startDato, sluttDato } = req.body;
 
-  if (!student || !praksisbedrift || !laerebedrift || !startDato) {
+  if (!student || !praksisbedrift || !laerebedrift || !startDato || !sluttDato) {
     const students = await Student.find().sort({ navn: 1 });
     const praksisbedrifter = await Company.find({ type: "praksisbedrift" }).sort({ navn: 1 });
     const laerebedrifter = await Company.find({ type: "laerebedrift" }).sort({ navn: 1 });
@@ -69,7 +76,7 @@ router.post("/", isAuthenticated, authorizeRole(["lærer"]), async (req, res) =>
     });
   }
 
-  await Placement.create({ student, praksisbedrift, laerebedrift, startDato });
+  await Placement.create({ student, praksisbedrift, laerebedrift, startDato, sluttDato });
   res.redirect("/plasseringer");
 });
 
