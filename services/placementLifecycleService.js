@@ -1,4 +1,5 @@
 const Placement = require("../models/Placement");
+const Statement = require("../models/Statement");
 
 function endOfDay(date) {
   const result = new Date(date);
@@ -31,7 +32,42 @@ async function findPlacementsReadyForDeletion(referenceDate = new Date()) {
     .sort({ sluttDato: 1 });
 }
 
+async function deleteExpiredPlacementData(referenceDate = new Date()) {
+  const placementsToDelete = await findPlacementsReadyForDeletion(referenceDate);
+
+  if (placementsToDelete.length === 0) {
+    return { deletedPlacements: 0, deletedStatements: 0 };
+  }
+
+  const placementIds = placementsToDelete.map((placement) => placement._id);
+  const studentIds = [
+    ...new Set(
+      placementsToDelete
+        .map((placement) => String(placement.student?._id || placement.student))
+        .filter(Boolean)
+    )
+  ];
+
+  const placementDeleteResult = await Placement.deleteMany({
+    _id: { $in: placementIds }
+  });
+
+  let deletedStatements = 0;
+  if (studentIds.length > 0) {
+    const statementDeleteResult = await Statement.deleteMany({
+      student: { $in: studentIds }
+    });
+    deletedStatements = statementDeleteResult.deletedCount || 0;
+  }
+
+  return {
+    deletedPlacements: placementDeleteResult.deletedCount || 0,
+    deletedStatements
+  };
+}
+
 module.exports = {
   findEndedPlacements,
-  findPlacementsReadyForDeletion
+  findPlacementsReadyForDeletion,
+  deleteExpiredPlacementData
 };
