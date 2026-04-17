@@ -9,4 +9,8 @@ router.get("/gdpr", (req, res) => {
   res.render("gdpr", { title: "GDPR og sikkerhet" });
 });
 
+router.get("/faq", (req, res) => {
+  res.render("faq", { title: "FAQ" });
+});
+
 module.exports = router;
