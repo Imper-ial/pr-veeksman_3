@@ -5,6 +5,7 @@ const Student = require("../models/Student");
 const Company = require("../models/Company");
 const {
   findEndedPlacements,
+  findPlacementsReadyForDeletion,
   deleteExpiredPlacementData
 } = require("../services/placementLifecycleService");
 
@@ -15,6 +16,7 @@ router.get("/", isAuthenticated, authorizeRole(["admin"]), async (req, res) => {
   const companyCount = await Company.countDocuments();
   const cleanupResult = await deleteExpiredPlacementData();
   const finishedPlacements = await findEndedPlacements();
+  const placementsReadyForDeletion = await findPlacementsReadyForDeletion();
 
   res.render("admin/index", {
     title: "Admin",
@@ -22,7 +24,8 @@ router.get("/", isAuthenticated, authorizeRole(["admin"]), async (req, res) => {
     studentCount,
     companyCount,
     cleanupResult,
-    finishedPlacements
+    finishedPlacements,
+    placementsReadyForDeletion
   });
 });
 

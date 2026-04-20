@@ -25,6 +25,14 @@
     <% }) %>
   </ul>
 <% } %>
+<% if (placementsReadyForDeletion.length > 0) { %>
+  <h4>Plasseringer klare for sletting</h4>
+  <ul>
+    <% placementsReadyForDeletion.forEach((placement) => { %>
+      <li><%= placement.student?.navn || "Ukjent elev" %> (sluttdato: <%= placement.sluttDato.toLocaleDateString("no-NO") %>).</li>
+    <% }) %>
+  </ul>
+<% } %>
 
 <p>Gå videre:</p>
 <ul>
